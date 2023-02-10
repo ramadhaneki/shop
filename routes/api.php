@@ -23,5 +23,6 @@ Route::prefix('dashboard')->middleware(['auth:api', 'admin'])->group(function ()
     Route::get('/count', [App\Http\Controllers\Api\Dashboard\DashboardController::class, 'index']);
     Route::get('/post', [App\Http\Controllers\Api\Dashboard\DashboardController::class, 'singlePost']);
     Route::get('/product', [App\Http\Controllers\Api\Dashboard\DashboardController::class, 'singleProduct']);
+    Route::apiResource('/categories', App\Http\Controllers\Api\Dashboard\CategoryController::class);
 });
 
