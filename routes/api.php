@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Dashboard\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', [App\Http\Controllers\Api\Dashboard\LoginController::class, 'index']);
+Route::prefix('dashboard')->middleware(['auth:api', 'admin'])->group(function () {
+    Route::get('/user', [App\Http\Controllers\Api\Dashboard\LoginController::class, 'getUser']);
+    Route::get('/refresh', [App\Http\Controllers\Api\Dashboard\LoginController::class, 'refreshToken']);
+    Route::post('/logout', [App\Http\Controllers\Api\Dashboard\LoginController::class, 'logout']);
+    Route::get('/count', [App\Http\Controllers\Api\Dashboard\DashboardController::class, 'index']);
+    Route::get('/post', [App\Http\Controllers\Api\Dashboard\DashboardController::class, 'singlePost']);
+    Route::get('/product', [App\Http\Controllers\Api\Dashboard\DashboardController::class, 'singleProduct']);
 });
+

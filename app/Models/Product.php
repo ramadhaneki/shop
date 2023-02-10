@@ -37,7 +37,7 @@ class Product extends Model
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => asset('/storage/products/', $value)
+            get: fn ($value) => asset('/storage/products/', $value),
         );  
     }
 
@@ -49,7 +49,7 @@ class Product extends Model
     protected function createdAt(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => \Carbon\Carbon::parse($value)->translatedFormat('1, d F Y')
+            get: fn ($value) => \Carbon\Carbon::parse($value)->translatedFormat('1, d F Y'),
         );
     }
 
@@ -61,7 +61,7 @@ class Product extends Model
     protected function updatedAt(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => \Carbon\Carbon::parse($value)->translatedFormat('1, d F Y')
+            get: fn ($value) => \Carbon\Carbon::parse($value)->translatedFormat('1, d F Y'),
         );
     }
 }

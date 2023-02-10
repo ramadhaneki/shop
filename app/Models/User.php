@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject; // <-- import JWTSubject
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject // <-- tambahkan ini
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -28,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
         'phoneNumber',
         'city',
         'roles',
-        'image'
+        'image',
     ];
 
     /**
@@ -49,14 +48,17 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    protected function image(): Attribute 
+    protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => asset('/storage/users/'. $value),
+            get: fn ($value) => asset('/storage/users/' . $value),
         );
     }
-
+    /**
+     * posts
+     *
+     * @return void
+     */
     public function posts()
     {
         return $this->hasMany(Post::class);
@@ -67,11 +69,10 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return void
      */
-
-     public function getJWTIdentifier()
-     {
+    public function getJWTIdentifier()
+    {
         return $this->getKey();
-     }
+    }
 
     /**
      * getJWTCustomClaims
@@ -82,6 +83,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-
-
 }
